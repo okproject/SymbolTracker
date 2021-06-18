@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 
 namespace SymbolTracker.Services
 {
-    public interface IStockServiceClient
+    public interface ISymbolLookupClient
     {
         JObject GetTimeSeries();
     }

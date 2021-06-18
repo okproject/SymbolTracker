@@ -17,7 +17,7 @@ namespace SymbolTracker
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHttpClient<SymbolTrackerService>();
-                    services.AddSingleton<IStockServiceClient, StockServiceClient>();
+                    services.AddSingleton<ISymbolLookupClient, TwelveDataLookupClient>();
                     services.AddTransient<SymbolLookupActor>();
                     services.AddHostedService<SymbolTrackerService>();
                 });

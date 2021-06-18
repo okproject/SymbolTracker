@@ -3,11 +3,11 @@ using Newtonsoft.Json.Linq;
 
 namespace SymbolTracker.Services
 {
-    public class StockServiceClient:IStockServiceClient
+    public class TwelveDataLookupClient:ISymbolLookupClient
     {
         private readonly HttpClient _httpClient;
 
-        public StockServiceClient(HttpClient httpClient)
+        public TwelveDataLookupClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

@@ -7,18 +7,18 @@ namespace SymbolTracker.Actors
 {
     public class SymbolLookupActor:ReceiveActor
     {
-        private readonly IStockServiceClient _stockServiceClient;
+        private readonly ISymbolLookupClient _symbolLookupClient;
 
-        public SymbolLookupActor(IStockServiceClient stockServiceClient)
+        public SymbolLookupActor(ISymbolLookupClient symbolLookupClient)
         {
-            _stockServiceClient = stockServiceClient;
+            _symbolLookupClient = symbolLookupClient;
             Receive<ApiDataRequest>(message => HandleApiDataRequest(message));
         }
 
         private void HandleApiDataRequest(ApiDataRequest message)
         {
             Console.WriteLine("SymbolLookupActor processing ApiDataRequest");
-            var result = _stockServiceClient.GetTimeSeries();
+            var result = _symbolLookupClient.GetTimeSeries();
             Sender.Tell(new ApiDataResponse(result));
         }
     }
