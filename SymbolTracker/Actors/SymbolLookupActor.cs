@@ -1,11 +1,10 @@
-using System;
 using Akka.Actor;
 using SymbolTracker.Messages;
 using SymbolTracker.Services;
 
 namespace SymbolTracker.Actors
 {
-    public class SymbolLookupActor:ReceiveActor
+    public class SymbolLookupActor : ReceiveActor
     {
         private readonly ISymbolLookupClient _symbolLookupClient;
 
@@ -17,8 +16,8 @@ namespace SymbolTracker.Actors
 
         private void HandleApiDataRequest(ApiDataRequest message)
         {
-            Console.WriteLine("SymbolLookupActor processing ApiDataRequest");
-            var result = _symbolLookupClient.GetTimeSeries();
+            var result =  _symbolLookupClient.GetTimeSeries().Result;
+            //TODO: do not use async - await pattern
             Sender.Tell(new ApiDataResponse(result));
         }
     }
