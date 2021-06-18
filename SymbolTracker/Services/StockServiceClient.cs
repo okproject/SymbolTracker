@@ -14,7 +14,7 @@ namespace SymbolTracker.Services
 
         public JObject GetTimeSeries()
         {
-            throw new System.NotImplementedException();
+            return new JObject();
         }
     }
 }
