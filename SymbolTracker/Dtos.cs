@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SymbolTracker
@@ -29,11 +30,11 @@ namespace SymbolTracker
 
     public class Value
     {
-        public string Datetime { get; set; }
-        public string Open { get; set; }
-        public string High { get; set; }
-        public string Low { get; set; }
-        public string Close { get; set; }
-        public string Volume { get; set; }
+        public DateTime Datetime { get; set; }
+        public decimal Open { get; set; }
+        public decimal High { get; set; }
+        public decimal Low { get; set; }
+        public decimal Close { get; set; }
+        public long Volume { get; set; }
     }
 }
