@@ -8,7 +8,7 @@ namespace SymbolTracker.Actors
     {
         private readonly ISymbolLookupClient _symbolLookupClient;
 
-        public SymbolLookupActor(ISymbolLookupClient symbolLookupClient)
+        public SymbolLookupActor(ISymbolLookupClient symbolLookupClient)    
         {
             _symbolLookupClient = symbolLookupClient;
             Receive<ApiDataRequest>(message => HandleApiDataRequest(message));
