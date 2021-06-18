@@ -21,7 +21,6 @@ namespace SymbolTracker.Actors
                 message.Data.FirstOrDefault(x => x?.Symbol?.Trim().ToLower() == SymbolName?.Trim().ToLower());
             var avg = stockSymbols?.Values?.Average(a => a.Close) ?? 0;
             avg = Decimal.Round(avg, 5);
-            //TODO:parse message, select related data, calculate average
             Sender.Tell(new SymbolAverageResponse(SymbolName, avg, DateTime.Now));
         }
     }
