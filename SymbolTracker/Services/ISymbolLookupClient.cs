@@ -1,9 +1,11 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace SymbolTracker.Services
 {
     public interface ISymbolLookupClient
     {
-        JObject GetTimeSeries();
+        Task<List<StockSymbol>> GetTimeSeries();
     }
 }
