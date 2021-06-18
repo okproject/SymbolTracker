@@ -4,6 +4,11 @@ namespace SymbolTracker.Messages
 {
     public class ApiDataResponse
     {
-        public JObject Data { get; set; }
+        public ApiDataResponse(JObject data)
+        {
+            Data = data;
+        }
+
+        public JObject Data { get; private set; }
     }
 }
