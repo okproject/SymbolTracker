@@ -10,7 +10,9 @@ namespace SymbolTracker.Actors
     {
         private Dictionary<string, IActorRef>  _subscribers { get; set; }
         private ICancelable _getPriceScheduler;
-        private IActorRef _lookupActor;
+        private readonly IActorRef _lookupActor;
+        public List<SymbolAverageResponse> SymbolAverages { get; set; }
+        
         
 
 
@@ -18,8 +20,16 @@ namespace SymbolTracker.Actors
         {
             Receive<ApiDataResponse>(mesasage => HandleApiDataResponse(mesasage));
             Receive<RegisterSymbolRequest>(mesasage => HandleRegisterSymbolRequest(mesasage));
+            Receive<SymbolAverageResponse>(message => HandleSymbolAverageResponse(message));
             _lookupActor = lookupActor;
             _subscribers = new Dictionary<string, IActorRef>();
+            SymbolAverages = new List<SymbolAverageResponse>();
+        }
+
+        private void HandleSymbolAverageResponse(SymbolAverageResponse message)
+        {
+            Console.WriteLine($"{message.SymbolName} {message.Date} {message.Average}");
+            SymbolAverages.Add(message);
         }
 
         private void HandleApiDataResponse(ApiDataResponse mesasage)
@@ -27,7 +37,7 @@ namespace SymbolTracker.Actors
             //Tell subscribers
             foreach (var actorRef in _subscribers)
             {
-                actorRef.Value.Tell(mesasage.Data);                
+                actorRef.Value.Tell(mesasage);                
             }
         }
 
@@ -60,7 +70,7 @@ namespace SymbolTracker.Actors
             {
                 // var newStockActor = Context.ActorOf(Props.Create(() => new StockActor(message.StockSymbol)), "StockActor_" + message.StockSymbol);
                 var props = Props.Create<SymbolActor>(message.StockSymbol);
-                var symbolActor = Context.ActorOf(props, "SymbolActor_" + message.StockSymbol);
+                var symbolActor = Context.ActorOf(props, "SymbolActor_" + message.StockSymbol.Replace("/","-"));
                 
                 _subscribers.Add(message.StockSymbol, symbolActor);
             }
