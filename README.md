@@ -1,5 +1,7 @@
 # SymbolTracker
 - Change time interval if required: SymbolReporterActor.cs 
+- Default time interval: 4seconds
+```csharp
     protected override void PreStart()
         {
             _getPriceScheduler = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(
@@ -8,5 +10,4 @@
                 _lookupActor,
                 new ApiDataRequest(),
                 Self);
-            // base.PreStart();
-        }    
+        }```
