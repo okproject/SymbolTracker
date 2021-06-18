@@ -1,14 +1,15 @@
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace SymbolTracker.Messages
 {
     public class ApiDataResponse
     {
-        public ApiDataResponse(JObject data)
+        public ApiDataResponse(IEnumerable<StockSymbol> data)
         {
-            Data = data;
+            Data = data ?? new List<StockSymbol>();
         }
 
-        public JObject Data { get; private set; }
+        public IEnumerable<StockSymbol> Data { get; private set; }
     }
 }
