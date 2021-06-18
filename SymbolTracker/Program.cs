@@ -16,6 +16,11 @@ namespace SymbolTracker
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) => { services.AddHostedService<Worker>(); });
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHttpClient<SymbolTrackerService>();
+                    services.AddHostedService<Worker>();
+                    services.AddHostedService<SymbolTrackerService>();
+                });
     }
 }
