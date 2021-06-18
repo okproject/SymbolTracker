@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SymbolTracker.Actors;
+using SymbolTracker.Services;
 
 namespace SymbolTracker
 {
@@ -19,7 +17,8 @@ namespace SymbolTracker
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHttpClient<SymbolTrackerService>();
-                    services.AddHostedService<Worker>();
+                    services.AddSingleton<IStockServiceClient, StockServiceClient>();
+                    services.AddTransient<SymbolLookupActor>();
                     services.AddHostedService<SymbolTrackerService>();
                 });
     }
