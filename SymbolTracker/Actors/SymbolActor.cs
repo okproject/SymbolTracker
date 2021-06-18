@@ -1,11 +1,11 @@
 using System;
-using System.IO.IsolatedStorage;
+using System.Linq;
 using Akka.Actor;
 using SymbolTracker.Messages;
 
 namespace SymbolTracker.Actors
 {
-    public class SymbolActor:ReceiveActor
+    public class SymbolActor : ReceiveActor
     {
         public string SymbolName { get; set; }
 
@@ -17,13 +17,12 @@ namespace SymbolTracker.Actors
 
         private void HandleApiDataResponse(ApiDataResponse message)
         {
+            var stockSymbols =
+                message.Data.FirstOrDefault(x => x?.Symbol?.Trim().ToLower() == SymbolName?.Trim().ToLower());
+            var avg = stockSymbols?.Values?.Average(a => a.Close) ?? 0;
+            avg = Decimal.Round(avg, 5);
             //TODO:parse message, select related data, calculate average
-            Sender.Tell(new SymbolAverageResponse()
-            {
-                Average = 1,
-                Date = DateTime.Now,
-                SymbolName = SymbolName
-            });
+            Sender.Tell(new SymbolAverageResponse(SymbolName, avg, DateTime.Now));
         }
     }
 }
