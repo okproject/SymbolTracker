@@ -5,6 +5,7 @@ using Akka.Actor;
 using Akka.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SymbolTracker.Actors;
+using SymbolTracker.Messages;
 
 namespace SymbolTracker
 {
@@ -29,6 +30,11 @@ namespace SymbolTracker
             var lookupActor = actorSystem.ActorOf(lookupActorProps, "LookupActor");
             var reporterProps = dependencyResolver.Props<SymbolReporterActor>(lookupActor);
             var reporterAct = actorSystem.ActorOf(reporterProps,"SymbolReporterActor");
+            reporterAct.Tell(new RegisterSymbolRequest("AAPL"));
+            reporterAct.Tell(new RegisterSymbolRequest("MSFT"));
+            reporterAct.Tell(new RegisterSymbolRequest("EUR/USD"));
+            reporterAct.Tell(new RegisterSymbolRequest("SBUX"));
+            reporterAct.Tell(new RegisterSymbolRequest("NKE"));
             return Task.CompletedTask;
         }
 
